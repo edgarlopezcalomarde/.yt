@@ -1,0 +1,17 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model todos {
+  id         String    @id(map: "PK__todos__3213E83F26E033D0") @default(dbgenerated("newid()"), map: "DF__todos__id__3D5E1FD2") @db.UniqueIdentifier
+  text       String    @db.NVarChar(Max)
+  completed  Boolean?  @default(false, map: "DF__todos__completed__3E52440B")
+  created_at DateTime? @default(now(), map: "DF__todos__created_a__3F466844") @db.DateTimeOffset
+  updated_at DateTime? @default(now(), map: "DF__todos__updated_a__403A8C7D") @db.DateTimeOffset
+}

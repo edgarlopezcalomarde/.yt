@@ -1,0 +1,26 @@
+name: "tanstack-db-example"
+
+services:
+  invoice-app-scaffolding-bbdd:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: tanstack-db-example-bbdd
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=PassSegura777
+      - MSSQL_PID=Developer
+      - TZ=Europe/Madrid
+    ports:
+      - 1433:1433
+    volumes:
+      - ./.compose/.db/tanstack-db-example-bbdd-data/data:/var/opt/mssql/data
+      - ./.compose/.db/tanstack-db-example-bbdd-data/log:/var/opt/mssql/log
+      - ./.compose/.db/tanstack-db-example-data/backup:/var/opt/mssql/backup
+      - ./.compose/.db/tanstack-db-example-bbdd-data/secrets:/var/opt/mssql/secrets
+    networks:
+      - tanstack-db-example-network
+networks:
+  tanstack-db-example-network:
+    driver: bridge
+volumes:
+  tanstack-db-example-bbdd-data:
+    driver: local

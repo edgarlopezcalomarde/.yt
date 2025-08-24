@@ -1,0 +1,4 @@
+.compose
+bun.lockb
+node_modules
+generated
