@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
 import { Pencil, X } from "lucide-react";
-import { useLiveQuery } from "@tanstack/react-db";
+import { eq, useLiveQuery } from "@tanstack/react-db";
 import { queryTodoCollection } from "./lib/collection";
 import { Button } from "./components/ui/button";
 import { cn } from "./lib/utils";
@@ -16,7 +16,13 @@ function App() {
   } = useLiveQuery((q) =>
     q
       .from({ todo: queryTodoCollection })
+      .where(({ todo }) => eq(todo.completed, false))
       .orderBy(({ todo }) => todo.createdAt, "asc")
+      .select(({ todo }) => ({
+        text: todo.text,
+        id: todo.id,
+        completed: todo.completed,
+      }))
   );
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error: {status}</div>;
@@ -33,7 +39,6 @@ function App() {
               completed: false,
               id: v4(),
             });
-            console.log(note);
           }}
         />
       </div>
