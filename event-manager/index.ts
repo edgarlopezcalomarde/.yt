@@ -2,7 +2,7 @@ import cors from "cors"
 import express, { Router } from "express"
 
 const app = express()
-app.use(cors)
+app.use(cors())
 app.use(express.static('public'))
 
 const healthRoute = Router();
@@ -26,7 +26,7 @@ healthRoute.get("/health", (req, res)=> {
 
 app.use("/api",healthRoute)
 
-app.listen(3000, ()=> {
-    console.log("http://localhost:3000")
-    console.log("http://localhost:3000/api/health")
+app.listen(3001, ()=> {
+    console.log("http://localhost:3001")
+    console.log("http://localhost:3001/api/health")
 })
